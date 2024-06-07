@@ -1,0 +1,26 @@
+body{
+    background-color: #9fe093;
+}
+table{
+    border-spacing: 0;
+}
+th, td{
+    height: 60px;
+    width: 60px;
+}
+img {
+    display: block;
+    margin: auto;
+}
+#boardFrame{
+    position: absolute;
+    top: 90%;
+    left: 20%;
+}
+
+.light{
+    background-color: antiquewhite;
+}
+.dark{
+    background-color:saddlebrown;
+}

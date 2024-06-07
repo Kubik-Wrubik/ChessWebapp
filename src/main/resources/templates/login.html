@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quest</title>
+    <link type="text/css" href="/css/login-style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="background-login">
+        <div>
+            <h1>Welcome to chess website</h1>
+        </div>
+        <div id="window-login">
+            <form th:action="@{/main-page}" method="POST">
+                <div class="form-div">
+                    <label for="nickname">Username:</label>
+                    <input type="text" id="nickname" name="nickname" required>
+                </div>
+
+                <div class="form-div">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-div">
+                    <button type="submit">Log in</button>
+                    <a th:href="@{/registration}" class="register-button">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

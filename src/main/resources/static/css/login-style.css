@@ -1,0 +1,31 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#background-login{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-color: rgb(165, 165, 165);
+}
+#window-login {
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+    width:50%;
+    background-color: rgb(112, 112, 112);
+    border-radius: 50px;
+    text-indent: 8vw;
+    border: solid rgb(239, 239, 239);
+}
+.form-div{
+    margin: 2vw;
+}
+.error-span{
+    color: rgb(255, 0, 0);
+}

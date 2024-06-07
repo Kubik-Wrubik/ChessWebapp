@@ -1,0 +1,29 @@
+body{
+    background-color: #9fe093;
+}
+
+#buttonsFrame{
+    position: absolute;
+    top: 10vh;
+    left: 35vw;
+    width: fit-content;
+    text-align: center;
+    /*font-size: 2rem;*/
+    background: #35e314;
+    border-radius: 10px;
+}
+.box{
+    background-color: #9fe093;
+    border-radius: 7px;
+    margin: 5vh;
+    padding: 1vh;
+}
+button{
+    padding: 3vh;
+    border-radius: 7px;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #e1ffe1;
+}
