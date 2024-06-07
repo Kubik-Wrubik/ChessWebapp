@@ -1,9 +1,8 @@
 package com.kubik.ChessWebapp.model;
 
 import com.kubik.ChessWebapp.statics.BoardStatus;
-import com.kubik.ChessWebapp.statics.Color;
 import com.kubik.ChessWebapp.model.pieces.*;
-import com.kubik.ChessWebapp.statics.PlayerTurn;
+import com.kubik.ChessWebapp.statics.PlayerColor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +18,7 @@ public class Board {
     private ChessUser secondChessPlayer;
     private ChessUser winner;
     private AbstractPiece selectedPiece;
-    private PlayerTurn turn;
-    private Color textColor = Color.GRAY;
+    private PlayerColor turn;
     private List<Square> squares;
     private BoardStatus boardStatus;
     private final static String[][] config = {
@@ -37,7 +35,7 @@ public class Board {
     public Board() {
         this.id = UUID.randomUUID().toString();
         this.selectedPiece = null;
-        this.turn = PlayerTurn.WHITE_PLAYER;
+        this.turn = PlayerColor.WHITE_PLAYER;
         this.boardStatus = BoardStatus.NEW;
         this.winner = null;
         this.squares = squaresInit();
@@ -75,7 +73,7 @@ public class Board {
                 String piece = config[y][x];
                 if (!"  ".equals(piece)) {
                     Square square = getSquareFromPos(new Position(x, y));
-                    Color color = piece.charAt(0) == 'w' ? Color.WHITE : Color.BLACK;
+                    PlayerColor color = piece.charAt(0) == 'w' ? PlayerColor.WHITE_PLAYER : PlayerColor.BLACK_PLAYER;
 
                     switch (piece.charAt(1)) {
                         case 'R': square.setOccupyingPiece(new Rook(new Position(x, y), color)); break;
@@ -94,8 +92,10 @@ public class Board {
         System.out.println(x + " and " + y);
         Square clickedSquare = getSquareFromPos(new Position(x, y));
         // todo assign selectedPiece to board
+        System.out.println(clickedSquare.getOccupyingPiece());
+        System.out.println(clickedSquare.getOccupyingPiece().getColor());
 //        if (selectedPiece == null) {
-//            if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
+//            if (clickedSquare.getOccupyingPiece() != null && clickedSquare.getOccupyingPiece().getColor().equals(turn)) {
 //                selectedPiece = clickedSquare.occupyingPiece;
 //            }
 //        } else if (selectedPiece.move(this, clickedSquare)) {
@@ -110,7 +110,7 @@ public class Board {
         return true;
     }
 
-    public boolean isInCheck(Color color, Position[] AttackingKingPositions) {
+    public boolean isInCheck(PlayerColor color, Position[] AttackingKingPositions) {
         boolean result = false;
         Position kingPos = null;
 
@@ -119,10 +119,8 @@ public class Board {
         Square newSquare = null;
         AbstractPiece newSquareOldPiece = null;
 
-//        якщо король під ударом
         if (AttackingKingPositions != null) {
             for (Square square : squares) {
-//                Якщо клітка збігається із кліткою вибраної фігури - зберігаємо фігуру і її клітку
                 if (square.getPosition().equals(AttackingKingPositions[0])) {
                     changingPiece = square.getOccupyingPiece();
                     oldSquare = square;
@@ -130,7 +128,6 @@ public class Board {
                     break;
                 }
             }
-//            Якщо клітка збігається із новою кліткою вибраної фігури - зберігаємо фігуру і її клітку
             for (Square square : squares) {
                 if (square.getPosition().equals(AttackingKingPositions[1])) {
                     newSquare = square;
@@ -179,7 +176,7 @@ public class Board {
         return result;
     }
 
-    public boolean isInCheckmate(Color color) {
+    public boolean isInCheckmate(PlayerColor color) {
         if (isInCheck(color, null)) {
             List<AbstractPiece> kingPieces = new ArrayList<>();
             for (Square square : squares) {

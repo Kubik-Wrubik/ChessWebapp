@@ -1,7 +1,7 @@
 package com.kubik.ChessWebapp.model;
 
 
-import com.kubik.ChessWebapp.statics.Color;
+import com.kubik.ChessWebapp.statics.PlayerColor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,14 +12,14 @@ import java.util.List;
 @Setter
 public abstract class AbstractPiece {
     private Position position;
-    private Color color;
+    private PlayerColor color;
     private boolean hasMoved = false;
     private boolean attackingKing = false;
     private String name = null;
     private boolean enPassant = false;
     private String imgPath;
 
-    public AbstractPiece(Position position, Color color) {
+    public AbstractPiece(Position position, PlayerColor color) {
         this.position = position;
         this.color = color;
     }

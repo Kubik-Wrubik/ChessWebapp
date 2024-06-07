@@ -4,13 +4,13 @@ import com.kubik.ChessWebapp.model.Board;
 import com.kubik.ChessWebapp.model.AbstractPiece;
 import com.kubik.ChessWebapp.model.Position;
 import com.kubik.ChessWebapp.model.Square;
-import com.kubik.ChessWebapp.statics.Color;
+import com.kubik.ChessWebapp.statics.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends AbstractPiece {
-    public Queen(Position position, Color color) {
+    public Queen(Position position, PlayerColor color) {
         super(position, color);
 
         this.setImgPath("images/" + color.name().toLowerCase().charAt(0) + "_queen.png");
