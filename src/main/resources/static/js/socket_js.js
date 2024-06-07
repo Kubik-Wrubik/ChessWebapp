@@ -4,8 +4,6 @@ let gameId;
 let playerType;
 
 function connectToSocket(gameId) {
-    console.log(gameId);
-    console.log("connecting to the game");
     let socket = new SockJS(url + "/move");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -19,7 +17,6 @@ function connectToSocket(gameId) {
 }
 
 function create_game(name) {
-    console.log("hooray create! " + name);
     $.ajax({
         url: url + "/game-create",
         type: 'POST',
@@ -29,8 +26,9 @@ function create_game(name) {
             "nickname": name
         }),
         success: function (board) {
+            console.log(board);
             gameId = board.id;
-            playerType = 'FIRST_PLAYER';
+            playerType = "WHITE_PLAYER";
 
             refreshChessBoard(board);
             connectToSocket(gameId);
@@ -44,7 +42,6 @@ function create_game(name) {
 
 
 function connectToRandom(name) {
-    console.log("hooray random! " + name);
     $.ajax({
         url: url + "/connect-random",
         type: 'POST',
@@ -55,10 +52,10 @@ function connectToRandom(name) {
         }),
         success: function (board) {
             gameId = board.id;
-            playerType = "SECOND_PLAYER";
+            playerType = "BLACK_PLAYER";
             refreshChessBoard(board);
             connectToSocket(gameId);
-            alert("Congrats you're playing with: " + board.firstPlayer.name);
+            alert("Congrats you're playing with: " + board.firstChessPlayer.nickname);
         },
         error: function (error) {
             console.log(error);

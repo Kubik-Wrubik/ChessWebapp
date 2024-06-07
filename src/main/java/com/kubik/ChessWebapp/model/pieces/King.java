@@ -13,8 +13,8 @@ import java.util.List;
 
 public class King extends AbstractPiece {
 
-    public King(Position pos, Color color) {
-        super(pos, color);
+    public King(Position position, Color color) {
+        super(position, color);
         this.setImgPath("images/" + color.toString().toLowerCase().charAt(0) + "_king.png");
         this.setName("K");
     }

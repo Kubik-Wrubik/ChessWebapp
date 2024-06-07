@@ -1,7 +1,5 @@
 package com.kubik.ChessWebapp.model;
 
-import com.kubik.ChessWebapp.dto.ChessPlayerDto;
-import com.kubik.ChessWebapp.entity.ChessUser;
 import com.kubik.ChessWebapp.statics.BoardStatus;
 import com.kubik.ChessWebapp.statics.Color;
 import com.kubik.ChessWebapp.model.pieces.*;
@@ -17,9 +15,9 @@ import java.util.UUID;
 @Setter
 public class Board {
     private String id;
-    private ChessPlayerDto firstChessPlayer;
-    private ChessPlayerDto secondChessPlayer;
-    private ChessPlayerDto winner;
+    private ChessUser firstChessPlayer;
+    private ChessUser secondChessPlayer;
+    private ChessUser winner;
     private AbstractPiece selectedPiece;
     private PlayerTurn turn;
     private Color textColor = Color.GRAY;
@@ -36,14 +34,12 @@ public class Board {
             {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"}
     };
 
-    public Board(ChessPlayerDto user) {
+    public Board() {
         this.id = UUID.randomUUID().toString();
         this.selectedPiece = null;
         this.turn = PlayerTurn.WHITE_PLAYER;
         this.boardStatus = BoardStatus.NEW;
-        this.firstChessPlayer = user;
         this.winner = null;
-
         this.squares = squaresInit();
         setField();
     }
@@ -94,11 +90,10 @@ public class Board {
         }
     }
 
-//    public boolean mouseClick(int mx, int my) {
-//        int x = (int) (mx / squareWidth);
-//        int y = (int) (my / squareHeight);
-//        Square clickedSquare = getSquareFromPos(new Position(x, y));
-//
+    public boolean mouseClick(int x, int y) {
+        System.out.println(x + " and " + y);
+        Square clickedSquare = getSquareFromPos(new Position(x, y));
+        // todo assign selectedPiece to board
 //        if (selectedPiece == null) {
 //            if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
 //                selectedPiece = clickedSquare.occupyingPiece;
@@ -112,8 +107,8 @@ public class Board {
 //        } else if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
 //            selectedPiece = clickedSquare.occupyingPiece;
 //        }
-//        return true;
-//    }
+        return true;
+    }
 
     public boolean isInCheck(Color color, Position[] AttackingKingPositions) {
         boolean result = false;
@@ -215,16 +210,12 @@ public class Board {
         return true;
     }
 
-//    public void draw(Display display) {
-//        if (selectedPiece != null) {
-//            getSquareFromPos(selectedPiece.pos).isHighlight = true;
-//            for (Square square : selectedPiece.getValidMoves(this)) {
-//                square.isHighlight = true;
-//            }
-//        }
-//
-//        for (Square square : squares) {
-//            square.draw(display, this);
-//        }
-//    }
+    public void showMoves() {
+        if (selectedPiece != null) {
+            getSquareFromPos(selectedPiece.getPosition()).setHighlight(true);
+            for (Square square : selectedPiece.getValidMoves(this)) {
+                square.setHighlight(true);
+            }
+        }
+    }
 }

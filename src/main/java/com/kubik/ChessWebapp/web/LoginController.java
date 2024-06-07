@@ -1,7 +1,7 @@
 package com.kubik.ChessWebapp.web;
 
 import com.kubik.ChessWebapp.dto.ChessUserDto;
-import com.kubik.ChessWebapp.entity.ChessUser;
+import com.kubik.ChessWebapp.model.ChessUser;
 import com.kubik.ChessWebapp.service.ChessUserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,7 +31,7 @@ public class LoginController {
     @PostMapping("/main-page")
     public String logIn(ChessUserDto chessUser, BindingResult bindingResult, Model model) {
         ChessUser userFromDB = chessUserService.getUserByNickname(chessUser.getNickname());
-        if(!userFromDB.getPassword().equals(chessUser.getPassword())){
+        if(userFromDB == null || !userFromDB.getPassword().equals(chessUser.getPassword())){
             bindingResult.rejectValue("password", "error.password", "Invalid password");
             return "login-failed";
         }

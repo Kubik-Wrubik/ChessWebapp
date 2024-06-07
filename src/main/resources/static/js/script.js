@@ -1,4 +1,5 @@
 var playerTurnNow = "";
+var imgTransparent = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
 let chessSquareAndIndexesMap  = {
     "00": "18", "10": "28", "20": "38", "30": "48", "40": "58", "50": "68", "60": "78", "70": "88",
     "01": "17", "11": "27", "21": "37", "31": "47", "41": "57", "51": "67", "61": "77", "71": "87",
@@ -9,31 +10,34 @@ let chessSquareAndIndexesMap  = {
     "06": "12", "16": "22", "26": "32", "36": "42", "46": "52", "56": "62", "66": "72", "76": "82",
     "07": "11", "17": "21", "27": "31", "37": "41", "47": "51", "57": "61", "67": "71", "77": "81"
 };
+
+const getKeyByValue = (object, value) => {
+    return Object.keys(object).find(key => object[key] === value);
+};
 function playerTurn(id) {
     if (playerTurnNow != playerType) {
         alert("It's not your turn!")
     } else {
-        if ((playerType == "FIRST_PLAYER" && id > 7) || (playerType == "SECOND_PLAYER" && id < 7)) {
-            alert("choose from your pits!")
-            return;
-        }
-        var stones = $("#" + id).text();
-        if (stones != "0") {
+        // if ((playerType == "WHITE_PLAYER" && id > 7) || (playerType == "SECOND_PLAYER" && id < 7)) {
+        //     alert("choose from your pits!")
+        //     return;
+        // }
+        // var stones = $("#" + id).text();
+        // if (stones != "0") {
             makeAMove(id);
-        }
-
+        // }
     }
 }
 
 function makeAMove(id) {
     $.ajax({
-        url: url + "/game/sow",
+        url: url + "/game-move",
         type: 'POST',
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
             "gameId": gameId,
-            "pitIndex": id
+            "squareIndex": id
         }),
         success: function (board) {
             refreshChessBoard(board);
@@ -45,26 +49,26 @@ function makeAMove(id) {
 }
 
 function refreshChessBoard(board) {
+    console.log(board);
     let squares = board.squares;
-    console.log(squares);
     squares.forEach((square) => {
         var piece = square.occupyingPiece;
         var position = square.position;
         var htmlPosition = chessSquareAndIndexesMap['' + position.x + position.y];
         if(piece != null) {
             var imgPath = "/" + piece.imgPath;
-            console.log(piece);
-            console.log(htmlPosition);
-            console.log(imgPath);
             $("#square_" + htmlPosition + " img").attr("src", imgPath);
         }
-        //add null
+        else{
+            $("#square_" + htmlPosition + " img").attr("src", imgTransparent);
+        }
     });
 
     if (board.winner != null) {
         alert("Winner is " + board.winner.nickname);
     }
-    playerTurnNow = board.playerTurn;
+    playerTurnNow = board.turn;
+    console.log(playerTurnNow);
 
     // $("#firstPlayerName").text(board.firstPlayer.name + "'s larger pit");
     // $("#secondPlayerName").text(board.secondPlayer== null ? "second player" : board.secondPlayer.name + "'s larger pit");
@@ -84,10 +88,15 @@ function refreshChessBoard(board) {
 }
 
 
-// $(".pitValue").click(function () {
-//     var pitId = $(this).attr('id');
-//     playerTurn(parseInt(pitId.substring(4)) + 1);
-// });
+$(".light, .dark").click(function () {
+    var squareId = $(this).attr('id');
+    if($("#" + squareId + " img").attr('src') === imgTransparent){
+        return;
+    }
+    var s = squareId.substring(7);
+    var keyByValue = getKeyByValue(chessSquareAndIndexesMap, s);
+    playerTurn(keyByValue);
+});
 
 
 

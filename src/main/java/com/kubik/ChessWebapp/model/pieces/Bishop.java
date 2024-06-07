@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends AbstractPiece {
-    public Bishop(Position pos, Color color) {
-        super(pos, color);
+    public Bishop(Position position, Color color) {
+        super(position, color);
 
         this.setImgPath("images/" + color.toString().toLowerCase().charAt(0) + "_bishop.png");
 

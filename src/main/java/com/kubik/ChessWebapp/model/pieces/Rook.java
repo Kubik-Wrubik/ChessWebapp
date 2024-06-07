@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends AbstractPiece {
-    public Rook(Position pos, Color color) {
-        super(pos, color);
+    public Rook(Position position, Color color) {
+        super(position, color);
 
         this.setImgPath("images/" + color.name().toLowerCase().charAt(0) + "_rook.png");
 

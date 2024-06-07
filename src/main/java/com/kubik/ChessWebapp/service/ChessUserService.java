@@ -1,7 +1,7 @@
 package com.kubik.ChessWebapp.service;
 
 import com.kubik.ChessWebapp.dto.ChessUserDto;
-import com.kubik.ChessWebapp.entity.ChessUser;
+import com.kubik.ChessWebapp.model.ChessUser;
 import com.kubik.ChessWebapp.repository.ChessUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +15,7 @@ public class ChessUserService {
     private final ChessUserRepository chessUserRepository;
     private final ModelMapper modelMapper;
 
-    public Long createUser(ChessUserDto chessUserDto) {
+    public String createUser(ChessUserDto chessUserDto) {
         return chessUserRepository.save(modelMapper.map(chessUserDto, ChessUser.class)).getId();
     }
 

@@ -12,8 +12,8 @@ import java.util.List;
 public class Pawn extends AbstractPiece {
     boolean doubleMove;
 
-    public Pawn(Position pos, Color color) {
-        super(pos, color);
+    public Pawn(Position position, Color color) {
+        super(position, color);
 
         this.setImgPath("images/" + color.name().toLowerCase().charAt(0) + "_pawn.png");
 

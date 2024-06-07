@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends AbstractPiece {
-    public Knight(Position pos, Color color) {
-        super(pos, color);
+    public Knight(Position position, Color color) {
+        super(position, color);
 
         this.setImgPath("images/" + color.toString().toLowerCase().charAt(0) + "_knight.png");
 
