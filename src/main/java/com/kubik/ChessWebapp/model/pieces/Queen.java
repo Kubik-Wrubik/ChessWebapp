@@ -19,14 +19,14 @@ public class Queen extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
-        List<Square> result = new ArrayList<>();
+    public List<List<Square>> getPossibleMoves(Board board) {
+        List<List<Square>> result = new ArrayList<>();
 
         List<Square> temp = new ArrayList<>();
         for (int y = this.getPosition().getY() - 1; y >= 0; y--) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.addAll(temp);
+        result.add(temp);
         temp.clear();
         for (int i = 1; i < 8; i++) {
             if (this.getPosition().getX() + i > 7 || this.getPosition().getY() - i < 0) {
@@ -34,13 +34,13 @@ public class Queen extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() - i)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int x = this.getPosition().getX() + 1; x < 8; x++) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int i = 1; i < 8; i++) {
@@ -49,13 +49,13 @@ public class Queen extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() + i)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int y = this.getPosition().getY() + 1; y < 8; y++) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int i = 1; i < 8; i++) {
@@ -64,13 +64,13 @@ public class Queen extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() + i)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int x = this.getPosition().getX() - 1; x >= 0; x--) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int i = 1; i < 8; i++) {
@@ -79,7 +79,7 @@ public class Queen extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() - i)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         return result;
     }

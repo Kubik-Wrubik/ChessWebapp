@@ -7,6 +7,7 @@ import com.kubik.ChessWebapp.model.Square;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends AbstractPiece {
@@ -19,8 +20,8 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
-        List<Square> result = new ArrayList<>();
+    public List<List<Square>> getPossibleMoves(Board board) {
+        List<List<Square>> result = new ArrayList<>();
         int[][] moves = {
                 {1, -2}, {2, -1}, {2, 1}, {1, 2},
                 {-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}
@@ -31,7 +32,7 @@ public class Knight extends AbstractPiece {
             int newY = this.getPosition().getY() + move[1];
             if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
                 Square square = board.getSquareFromPos(new Position(newX, newY));
-                result.add(square);
+                result.add(Collections.singletonList(square));
             }
         }
 

@@ -7,6 +7,7 @@ import com.kubik.ChessWebapp.model.Square;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends AbstractPiece {
@@ -22,9 +23,9 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
+    public List<List<Square>> getPossibleMoves(Board board) {
         //todo delete temp list
-        List<Square> result = new ArrayList<>();
+        List<List<Square>> result = new ArrayList<>();
         List<Position> temp = new ArrayList<>();
 
         //todo position should be relative
@@ -47,57 +48,58 @@ public class Pawn extends AbstractPiece {
         for (Position move : temp) {
             int newY = this.getPosition().getY() + move.getY();
             if (newY >= 0 && newY < 8) {
-                result.add(board.getSquareFromPos(new Position(this.getPosition().getX(), newY)));
+                result.add(Collections.singletonList(
+                        board.getSquareFromPos(new Position(this.getPosition().getX(), newY))));
             }
         }
 
         return result;
     }
 
-    @Override
-    public List<Square> getMoves(Board board) {
-        List<Square> result = new ArrayList<>();
-        for (Square square : getPossibleMoves(board)) {
-            if (square.getOccupyingPiece() != null) {
-                break;
-            } else {
-                result.add(square);
-            }
-        }
-
-        if (this.getColor() == PlayerColor.WHITE_PLAYER) {
-            if (this.getPosition().getX() + 1 < 8 && this.getPosition().getY() - 1 >= 0) {
-                Square square = board.getSquareFromPos(
-                        new Position(this.getPosition().getX() + 1, this.getPosition().getY() - 1)
-                );
-                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
-                    result.add(square);
-                }
-            }
-
-            if (this.getPosition().getX() - 1 >= 0 && this.getPosition().getY() - 1 >= 0) {
-                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() - 1, this.getPosition().getY() - 1));
-                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
-                    result.add(square);
-                }
-            }
-        } else if (this.getColor() == PlayerColor.BLACK_PLAYER) {
-            if (this.getPosition().getX() + 1 < 8 && this.getPosition().getY() + 1 < 8) {
-                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() + 1, this.getPosition().getY() + 1));
-                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
-                    result.add(square);
-                }
-            }
-            if (this.getPosition().getX() - 1 >= 0 && this.getPosition().getY() + 1 < 8) {
-                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() - 1, this.getPosition().getY() + 1));
-                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
-                    result.add(square);
-                }
-            }
-        }
-
-        return result;
-    }
+//    @Override
+//    public List<Square> getMoves(Board board) {
+//        List<Square> result = new ArrayList<>();
+//        for (List<Square> square : getPossibleMoves(board)) {
+//            if (square.getOccupyingPiece() != null) {
+//                break;
+//            } else {
+//                result.add(square);
+//            }
+//        }
+//
+//        if (this.getColor() == PlayerColor.WHITE_PLAYER) {
+//            if (this.getPosition().getX() + 1 < 8 && this.getPosition().getY() - 1 >= 0) {
+//                Square square = board.getSquareFromPos(
+//                        new Position(this.getPosition().getX() + 1, this.getPosition().getY() - 1)
+//                );
+//                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
+//                    result.add(square);
+//                }
+//            }
+//
+//            if (this.getPosition().getX() - 1 >= 0 && this.getPosition().getY() - 1 >= 0) {
+//                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() - 1, this.getPosition().getY() - 1));
+//                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
+//                    result.add(square);
+//                }
+//            }
+//        } else if (this.getColor() == PlayerColor.BLACK_PLAYER) {
+//            if (this.getPosition().getX() + 1 < 8 && this.getPosition().getY() + 1 < 8) {
+//                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() + 1, this.getPosition().getY() + 1));
+//                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
+//                    result.add(square);
+//                }
+//            }
+//            if (this.getPosition().getX() - 1 >= 0 && this.getPosition().getY() + 1 < 8) {
+//                Square square = board.getSquareFromPos(new Position(this.getPosition().getX() - 1, this.getPosition().getY() + 1));
+//                if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() != this.getColor()) {
+//                    result.add(square);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
 
     @Override
     public void specificMove(Square square, Board board, Square prevSquare) {

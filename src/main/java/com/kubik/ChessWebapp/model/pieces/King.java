@@ -8,6 +8,8 @@ import com.kubik.ChessWebapp.statics.PlayerColor;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class King extends AbstractPiece {
@@ -19,14 +21,14 @@ public class King extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
-        List<Square> output = new ArrayList<>();
+    public List<List<Square>> getPossibleMoves(Board board) {
+        List<List<Square>> output = new ArrayList<>();
         int[][] moves = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
         for (int[] move : moves) {
             int newX = this.getPosition().getX() + move[0];
             int newY = this.getPosition().getY() + move[1];
             if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-                output.add(board.getSquareFromPos(new Position(newX, newY)));
+                output.add(Collections.singletonList(board.getSquareFromPos(new Position(newX, newY))));
             }
         }
         return output;
@@ -170,8 +172,8 @@ public class King extends AbstractPiece {
 
     public List<Square> getValidMoves(Board board) {
         List<Square> output = new ArrayList<>();
-        List<Square> possibleMoves = this.getPossibleMoves(board);
-        for (Square square : possibleMoves) {
+        List<Square> moves = this.getMoves(board);
+        for (Square square : moves) {
             if (!board.isInCheck(this.getColor(), new Position[]{this.getPosition(), square.getPosition()})) {
                 output.add(square);
             }

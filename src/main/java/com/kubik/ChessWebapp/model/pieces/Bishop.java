@@ -19,8 +19,9 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
-        List<Square> result = new ArrayList<>();
+    public List<List<Square>> getPossibleMoves(Board board) {
+        //todo make unification for this method result variable name
+        List<List<Square>> result = new ArrayList<>();
 
         List<Square> temp = new ArrayList<>();
         for (int i = 1; i < 8; i++) {
@@ -29,7 +30,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() - i)));
         }
-        result.addAll(temp);
+        result.add(temp);
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -38,7 +39,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() + i)));
         }
-        result.addAll(temp);
+        result.add(temp);
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -47,7 +48,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() + i)));
         }
-        result.addAll(temp);
+        result.add(temp);
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -56,7 +57,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() - i)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         return result;
     }

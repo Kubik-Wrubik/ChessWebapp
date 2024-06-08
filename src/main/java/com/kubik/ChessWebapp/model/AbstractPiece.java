@@ -47,26 +47,49 @@ public abstract class AbstractPiece {
         }
     }
 
+//    public List<Square> getMoves(Board board) {
+//        List<Square> output = new ArrayList<>();
+////        Користуючись правилами за якими ходить певна фігура, отримуємо можливі клітки для ходу
+//        List<Square> possibleMoves = getPossibleMoves(board);
+//        for (Square square : possibleMoves) {
+////                Якщо фігура впирається в фігуру - провіряємо чи це ворожа фігура і прериваємо можливі ходи в цьому напрямку
+//            if (square.getOccupyingPiece() != null) {
+//                if (square.getOccupyingPiece().getColor() != this.color) {
+//                    output.add(square);
+//                }
+//                break;
+//            }
+////                Якщо клітка порожня - додаємо її до можливих ходів
+//            else {
+//                output.add(square);
+//            }
+//        }
+//        return output;
+//    }
+
     public List<Square> getMoves(Board board) {
         List<Square> output = new ArrayList<>();
-//        Користуючись правилами за якими ходить певна фігура, отримуємо можливі клітки для ходу
-        List<Square> possibleMoves = getPossibleMoves(board);
-        for (Square square : possibleMoves) {
-//                Якщо фігура впирається в фігуру - провіряємо чи це ворожа фігура і прериваємо можливі ходи в цьому напрямку
-            if (square.getOccupyingPiece() != null) {
-                if (square.getOccupyingPiece().getColor() != this.color) {
+        // Користуючись правилами за якими ходить певна фігура, отримуємо можливі клітки для ходу
+        List<List<Square>> possibleMoves = getPossibleMoves(board);
+        for (List<Square> direction : possibleMoves) {
+            for (Square square : direction) {
+                // Якщо фігура впирається в фігуру - провіряємо чи це ворожа фігура і прериваємо можливі ходи в цьому напрямку
+                if (square.getOccupyingPiece() != null) {
+                    if (!square.getOccupyingPiece().getColor().equals(this.color)) {
+                        output.add(square);
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+                // Якщо клітка порожня - додаємо її до можливих ходів
+                else {
                     output.add(square);
                 }
-                break;
-            }
-//                Якщо клітка порожня - додаємо її до можливих ходів
-            else {
-                output.add(square);
             }
         }
         return output;
     }
-
 
     public List<Square> getValidMoves(Board board) {
         List<Square> result = new ArrayList<>();
@@ -80,7 +103,7 @@ public abstract class AbstractPiece {
         return result;
     }
 
-    public abstract List<Square> getPossibleMoves(Board board);
+    public abstract List<List<Square>> getPossibleMoves(Board board);
 
     public abstract void specificMove(Square square, Board board, Square prevSquare);
 }

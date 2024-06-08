@@ -19,32 +19,32 @@ public class Rook extends AbstractPiece {
     }
 
     @Override
-    public List<Square> getPossibleMoves(Board board) {
-        List<Square> result = new ArrayList<>();
+    public List<List<Square>> getPossibleMoves(Board board) {
+        List<List<Square>> result = new ArrayList<>();
 
         List<Square> temp = new ArrayList<>();
         for (int y = this.getPosition().getY() - 1; y >= 0; y--) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int x = this.getPosition().getX() + 1; x < 8; x++) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int y = this.getPosition().getY() + 1; y < 8; y++) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         temp.clear();
         for (int x = this.getPosition().getX() - 1; x >= 0; x--) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.addAll(temp);
+        result.add(temp);
 
         return result;
     }
