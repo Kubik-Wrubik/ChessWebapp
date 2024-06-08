@@ -5,6 +5,7 @@ import com.kubik.ChessWebapp.model.pieces.*;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString
 public class Board {
     private String id;
     private ChessUser firstChessPlayer;
@@ -52,18 +54,18 @@ public class Board {
         return result;
     }
 
-    public Square getSquareFromPos(Position pos) {
+    public Square getSquareFromPos(Position position) {
         for (Square square : squares) {
-            Position position = square.getPosition();
-            if (position.getX() == pos.getX() && position.getY() == pos.getY()) {
+            Position squarePosition = square.getPosition();
+            if (squarePosition.getX() == position.getX() && squarePosition.getY() == position.getY()) {
                 return square;
             }
         }
         return null;
     }
 
-    public AbstractPiece getPieceFromPos(Position pos) {
-        Square square = getSquareFromPos(pos);
+    public AbstractPiece getPieceFromPos(Position position) {
+        Square square = getSquareFromPos(position);
         return square != null ? square.getOccupyingPiece() : null;
     }
 
@@ -91,20 +93,24 @@ public class Board {
     public boolean mouseClick(int x, int y) {
         System.out.println(x + " and " + y);
         Square clickedSquare = getSquareFromPos(new Position(x, y));
+//        System.out.println(clickedSquare);
         // todo assign selectedPiece to board
-        System.out.println(clickedSquare.getOccupyingPiece());
-        System.out.println(clickedSquare.getOccupyingPiece().getColor());
-//        if (selectedPiece == null) {
-//            if (clickedSquare.getOccupyingPiece() != null && clickedSquare.getOccupyingPiece().getColor().equals(turn)) {
-//                selectedPiece = clickedSquare.occupyingPiece;
-//            }
-//        } else if (selectedPiece.move(this, clickedSquare)) {
+
+        if (selectedPiece == null) {
+            if (clickedSquare.getOccupyingPiece() != null && clickedSquare.getOccupyingPiece().getColor().equals(turn)) {
+                selectedPiece = clickedSquare.getOccupyingPiece();
+                showMoves();
+            }
+        } else if (selectedPiece.move(this, clickedSquare, false)) {
 //            clip.start();
+            turn = PlayerColor.togglePlayerTurn(turn);
 //            turn = "white".equals(turn) ? "black" : "white";
-//            if (isStalemate(turn)) {
-//                return false;
-//            }
-//        } else if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
+            if (isStalemate(turn)) {
+                return false;
+            }
+        }
+        //todo recall for what this code
+//        else if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
 //            selectedPiece = clickedSquare.occupyingPiece;
 //        }
         return true;
@@ -118,7 +124,7 @@ public class Board {
         Square oldSquare = null;
         Square newSquare = null;
         AbstractPiece newSquareOldPiece = null;
-
+        // todo difference in logic
         if (AttackingKingPositions != null) {
             for (Square square : squares) {
                 if (square.getPosition().equals(AttackingKingPositions[0])) {
@@ -195,7 +201,7 @@ public class Board {
         return false;
     }
 
-    public boolean isStalemate(String color) {
+    public boolean isStalemate(PlayerColor color) {
 //        Якщо жодна з фігур короля немає можливих ходів включаючи самого короля- повертає True
         for (Square square : squares) {
             if (square.getOccupyingPiece() != null && color.equals(square.getOccupyingPiece().getColor())) {

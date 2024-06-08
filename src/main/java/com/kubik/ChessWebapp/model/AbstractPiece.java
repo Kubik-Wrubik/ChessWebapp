@@ -33,11 +33,10 @@ public abstract class AbstractPiece {
         if (getValidMoves(board).contains(square) || force) {
             Square prevSquare = board.getSquareFromPos(position); //todo to conclude for what this line
             this.setPosition(square.getPosition());
-
-            prevSquare.setOccupyingPiece(null);
             square.setOccupyingPiece(this);
-            board.setSelectedPiece(null);
+            prevSquare.setOccupyingPiece(null);
             this.hasMoved = true;
+            board.setSelectedPiece(null);
             specificMove(square, board, prevSquare);
             return true;
         }
@@ -51,7 +50,8 @@ public abstract class AbstractPiece {
     public List<Square> getMoves(Board board) {
         List<Square> output = new ArrayList<>();
 //        Користуючись правилами за якими ходить певна фігура, отримуємо можливі клітки для ходу
-        for (Square square : getPossibleMoves(board)) {
+        List<Square> possibleMoves = getPossibleMoves(board);
+        for (Square square : possibleMoves) {
 //                Якщо фігура впирається в фігуру - провіряємо чи це ворожа фігура і прериваємо можливі ходи в цьому напрямку
             if (square.getOccupyingPiece() != null) {
                 if (square.getOccupyingPiece().getColor() != this.color) {
@@ -66,6 +66,7 @@ public abstract class AbstractPiece {
         }
         return output;
     }
+
 
     public List<Square> getValidMoves(Board board) {
         List<Square> result = new ArrayList<>();

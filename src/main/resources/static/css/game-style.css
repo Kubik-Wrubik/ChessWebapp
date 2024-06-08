@@ -24,3 +24,9 @@ img {
 .dark{
     background-color:saddlebrown;
 }
+.light.highlighted{
+    background-color: chartreuse !important;
+}
+.dark.highlighted{
+    background-color: darkgreen !important;
+}

@@ -62,6 +62,12 @@ function refreshChessBoard(board) {
         else{
             $("#square_" + htmlPosition + " img").attr("src", imgTransparent);
         }
+        if(square.highlight){
+            $("#square_" + htmlPosition).addClass("highlighted");
+        }
+        else{
+            $("#square_" + htmlPosition).removeClass("highlighted");
+        }
     });
 
     if (board.winner != null) {
@@ -90,9 +96,10 @@ function refreshChessBoard(board) {
 
 $(".light, .dark").click(function () {
     var squareId = $(this).attr('id');
-    if($("#" + squareId + " img").attr('src') === imgTransparent){
-        return;
-    }
+    // todo неможливо передати пусту клітинку для переміщення фігури
+    // if($("#" + squareId + " img").attr('src') === imgTransparent){
+    //     return;
+    // }
     var s = squareId.substring(7);
     var keyByValue = getKeyByValue(chessSquareAndIndexesMap, s);
     playerTurn(keyByValue);

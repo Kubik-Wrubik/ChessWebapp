@@ -23,27 +23,29 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Square> getPossibleMoves(Board board) {
+        //todo delete temp list
         List<Square> result = new ArrayList<>();
-        List<Square> temp = new ArrayList<>();
+        List<Position> temp = new ArrayList<>();
 
+        //todo position should be relative
         if (this.getColor() == PlayerColor.WHITE_PLAYER) {
-            temp.add(board.getSquareFromPos(new Position(0, -1)));
+            temp.add(new Position(0, -1));
             doubleMove = false;
             if (!this.isHasMoved()) {
-                temp.add(board.getSquareFromPos(new Position(0, -2)));
+                temp.add(new Position(0, -2));
                 doubleMove = true;
             }
         } else if (this.getColor() == PlayerColor.BLACK_PLAYER) {
-            temp.add(board.getSquareFromPos(new Position(0, 1)));
+            temp.add(new Position(0, 1));
             doubleMove = false;
             if (!this.isHasMoved()) {
-                temp.add(board.getSquareFromPos(new Position(0, 2)));
+                temp.add(new Position(0, 2));
                 doubleMove = true;
             }
         }
-
-        for (Square move : temp) {
-            int newY = this.getPosition().getY() + move.getPosition().getY();
+//        System.out.println("board.getSquareFromPos = " + board.getSquareFromPos(new Position(0, 2)));
+        for (Position move : temp) {
+            int newY = this.getPosition().getY() + move.getY();
             if (newY >= 0 && newY < 8) {
                 result.add(board.getSquareFromPos(new Position(this.getPosition().getX(), newY)));
             }

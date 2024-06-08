@@ -27,6 +27,7 @@ public class ChessGameService {
         Optional<Board> optionalGame = boardRepository.findFirstBySecondChessPlayerIsNull();
         optionalGame.orElseThrow(() -> new RuntimeException("All games are occupied"));
         Board board = optionalGame.get();
+        System.out.println(board);
         board.setSecondChessPlayer(user);
         board.setBoardStatus(BoardStatus.IN_PROGRESS);
         boardRepository.save(board);
@@ -43,7 +44,7 @@ public class ChessGameService {
         board.mouseClick(Character.getNumericValue(squareIndex.charAt(0)), Character.getNumericValue(squareIndex.charAt(1)));
 
 //        Board boardAfterMove = sowService.sow(board,sow.getPitIndex());
-//        gameRepository.save(boardAfterMove);
+        boardRepository.save(board);
 
 //        return boardAfterMove;
         return board;

@@ -24,6 +24,8 @@ public class GameController {
 
     @PostMapping("/game-create")
     public ResponseEntity<Board> create(@RequestBody ChessPlayerDto chessPlayer) {
+        System.out.println("create player: " + chessPlayer);
+
 //        ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
         ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
         return ResponseEntity.ok(chessGameService.createGame(userByNickname));
@@ -31,6 +33,7 @@ public class GameController {
     @PostMapping("/connect-random")
     public ResponseEntity<Board> connectRandom(@RequestBody ChessPlayerDto chessPlayer) throws RuntimeException{
         System.out.println("two players plays, Hooray");
+        System.out.println("connect-random player: " + chessPlayer);
         ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
         return ResponseEntity.ok(chessGameService.connectToRandom(userByNickname));
     }
@@ -51,8 +54,8 @@ public class GameController {
 //    }
 
     @PostMapping("/game-move")
-    public ResponseEntity<Board> sow(@RequestBody Move move) throws RuntimeException {
-        System.out.println(move);
+    public ResponseEntity<Board> move(@RequestBody Move move) throws RuntimeException {
+//        System.out.println(move);
         Board board = chessGameService.move(move);
 
         simpMessagingTemplate.convertAndSend("/topic/game-progress/" + board.getId(), board);

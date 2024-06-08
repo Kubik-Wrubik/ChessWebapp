@@ -26,7 +26,6 @@ function create_game(name) {
             "nickname": name
         }),
         success: function (board) {
-            console.log(board);
             gameId = board.id;
             playerType = "WHITE_PLAYER";
 
@@ -48,7 +47,7 @@ function connectToRandom(name) {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-            "name": name
+            "nickname": name
         }),
         success: function (board) {
             gameId = board.id;
