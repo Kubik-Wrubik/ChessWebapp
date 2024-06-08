@@ -26,25 +26,25 @@ public class Rook extends AbstractPiece {
         for (int y = this.getPosition().getY() - 1; y >= 0; y--) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
 
         temp.clear();
         for (int x = this.getPosition().getX() + 1; x < 8; x++) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
 
         temp.clear();
         for (int y = this.getPosition().getY() + 1; y < 8; y++) {
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX(), y)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
 
         temp.clear();
         for (int x = this.getPosition().getX() - 1; x >= 0; x--) {
             temp.add(board.getSquareFromPos(new Position(x, this.getPosition().getY())));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
 
         return result;
     }

@@ -189,6 +189,7 @@ public class King extends AbstractPiece {
 
     @Override
     public void specificMove(Square square, Board board, Square prevSquare) {
+        //todo cant castle
         if (this.getName().equals("K")) {
             if (prevSquare.getPosition().getX() - this.getPosition().getX() == 2) {
                 AbstractPiece rook = board.getPieceFromPos(new Position(0, this.getPosition().getY()));

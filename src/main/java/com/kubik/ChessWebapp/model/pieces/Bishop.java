@@ -30,7 +30,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() - i)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -39,7 +39,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() + i, this.getPosition().getY() + i)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -48,7 +48,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() + i)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
         temp.clear();
 
         for (int i = 1; i < 8; i++) {
@@ -57,7 +57,7 @@ public class Bishop extends AbstractPiece {
             }
             temp.add(board.getSquareFromPos(new Position(this.getPosition().getX() - i, this.getPosition().getY() - i)));
         }
-        result.add(temp);
+        result.add(new ArrayList<>(temp));
 
         return result;
     }
