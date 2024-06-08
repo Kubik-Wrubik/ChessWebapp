@@ -50,7 +50,7 @@ public class King extends AbstractPiece {
                         List<AbstractPiece> pieces = new ArrayList<>();
 //                        field.getPiecesByColor("black");
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -67,7 +67,6 @@ public class King extends AbstractPiece {
                         return true;
                     }
                 }
-                /// end
             } else if (this.getColor()== PlayerColor.BLACK_PLAYER) {
                 AbstractPiece leftRook = board.getSquareFromPos(new Position(0, 0)).getOccupyingPiece();
                 if (leftRook != null && !leftRook.isHasMoved()) {
@@ -81,7 +80,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -119,7 +118,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -149,7 +148,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
