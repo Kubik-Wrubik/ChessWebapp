@@ -50,7 +50,7 @@ public class King extends AbstractPiece {
                         List<AbstractPiece> pieces = new ArrayList<>();
 //                        field.getPiecesByColor("black");
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -81,7 +81,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -118,7 +118,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -148,7 +148,7 @@ public class King extends AbstractPiece {
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
                         for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null || square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
