@@ -108,6 +108,7 @@ public class King extends AbstractPiece {
             if (this.getColor()== PlayerColor.WHITE_PLAYER) {
                 AbstractPiece rightRook = board.getSquareFromPos(new Position(7, 7)).getOccupyingPiece();
                 if (rightRook != null && !rightRook.isHasMoved()) {
+                    // вище ясно
                     boolean pathClear = true;
                     for (int i = 5; i <= 6; i++) {
                         if (board.getSquareFromPos(new Position(i, 7)).getOccupyingPiece() != null) {

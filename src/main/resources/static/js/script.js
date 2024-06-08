@@ -16,10 +16,10 @@ const getKeyByValue = (object, value) => {
 };
 function playerTurn(id) {
     if (playerTurnNow != playerType) {
-        alert("It's not your turn!")
+        alert("It's not your turn!");
     } else {
         // if ((playerType == "WHITE_PLAYER" && id > 7) || (playerType == "SECOND_PLAYER" && id < 7)) {
-        //     alert("choose from your pits!")
+        //     alert("choose from your pits!");
         //     return;
         // }
         // var stones = $("#" + id).text();

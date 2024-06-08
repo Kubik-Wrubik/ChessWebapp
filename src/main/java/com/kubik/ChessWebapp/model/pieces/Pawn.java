@@ -24,7 +24,6 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<List<Square>> getPossibleMoves(Board board) {
-        //todo delete temp list
         List<List<Square>> result = new ArrayList<>();
         List<Position> temp = new ArrayList<>();
 
@@ -45,20 +44,21 @@ public class Pawn extends AbstractPiece {
             }
         }
 //        System.out.println("board.getSquareFromPos = " + board.getSquareFromPos(new Position(0, 2)));
+        List<Square> direction = new ArrayList<>();
         for (Position move : temp) {
             int newY = this.getPosition().getY() + move.getY();
             if (newY >= 0 && newY < 8) {
-                result.add(Collections.singletonList(
-                        board.getSquareFromPos(new Position(this.getPosition().getX(), newY))));
+                direction.add(board.getSquareFromPos(new Position(this.getPosition().getX(), newY)));
             }
         }
-
+        result.add(new ArrayList<>(direction));
         return result;
     }
 
     @Override
     public List<Square> getMoves(Board board) {
         // todo pawn can jump over his color figures
+        // todo pawn cant make enPassant
         List<Square> result = new ArrayList<>();
         List<List<Square>> possibleMoves = getPossibleMoves(board);
         for (List<Square> direction : possibleMoves) {
