@@ -17,7 +17,6 @@ function connectToSocket(gameId) {
 }
 
 function create_game(name) {
-    alert("1");
     $.ajax({
         url: url + "/game-create",
         type: 'POST',
@@ -27,7 +26,6 @@ function create_game(name) {
             "nickname": name
         }),
         success: function (board) {
-            alert("2");
             gameId = board.id;
             playerType = "WHITE_PLAYER";
 
@@ -36,7 +34,6 @@ function create_game(name) {
             alert("Your created a game. Game id is: " + board.id);
         },
         error: function (error) {
-            alert("3");
             console.log(error);
         }
     })

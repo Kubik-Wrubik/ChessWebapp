@@ -2,6 +2,7 @@ package com.kubik.ChessWebapp.model;
 
 import com.kubik.ChessWebapp.statics.BoardStatus;
 import com.kubik.ChessWebapp.model.pieces.*;
+import com.kubik.ChessWebapp.statics.GameResult;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class Board {
     private String id;
     private ChessUser firstChessPlayer;
     private ChessUser secondChessPlayer;
-    private ChessUser winner;
+    private GameResult gameResult;
     private AbstractPiece selectedPiece;
     private PlayerColor turn;
     private List<Square> squares;
@@ -39,7 +40,7 @@ public class Board {
         this.selectedPiece = null;
         this.turn = PlayerColor.WHITE_PLAYER;
         this.boardStatus = BoardStatus.NEW;
-        this.winner = null;
+        this.gameResult = null;
         this.squares = squaresInit();
         setField();
     }
@@ -90,7 +91,7 @@ public class Board {
         }
     }
 
-    public boolean mouseClick(int x, int y) {
+    public void mouseClick(int x, int y) {
         System.out.println(x + " and " + y);
         Square clickedSquare = getSquareFromPos(new Position(x, y));
 //        System.out.println(clickedSquare);
@@ -102,18 +103,19 @@ public class Board {
                 showMoves();
             }
         } else if (selectedPiece.move(this, clickedSquare, false)) {
-//            clip.start();
             turn = PlayerColor.togglePlayerTurn(turn);
-//            turn = "white".equals(turn) ? "black" : "white";
-            if (isStalemate(turn)) {
-                return false;
-            }
+            //todo check it in another method
+//            if (isStalemate(turn)) {
+//                return false;
+//            }
         }
         //todo recall for what this code
 //        else if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
 //            selectedPiece = clickedSquare.occupyingPiece;
 //        }
-        return true;
+//        return true;
+
+        checkGameOver();
     }
 
     public boolean isInCheck(PlayerColor color, Position[] AttackingKingPositions) {
@@ -210,6 +212,7 @@ public class Board {
                 }
             }
         }
+
         return true;
     }
 
@@ -220,5 +223,16 @@ public class Board {
                 square.setHighlight(true);
             }
         }
+    }
+
+    public GameResult checkGameOver() {
+        if(isInCheckmate(PlayerColor.WHITE_PLAYER)){
+            return GameResult.BLACK_PLAYER_WIN;
+        } else if (isInCheckmate(PlayerColor.BLACK_PLAYER)) {
+            return GameResult.WHITE_PLAYER_WIN;
+        } else if(isStalemate(turn)) {
+            return GameResult.STALEMATE;
+        }
+        return null;
     }
 }

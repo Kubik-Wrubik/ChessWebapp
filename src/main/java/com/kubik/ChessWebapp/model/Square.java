@@ -10,7 +10,6 @@ import lombok.ToString;
 public class Square {
     private Position position;
     private String color;
-//    private Square selectedSquare; todo add this latter
     private AbstractPiece occupyingPiece;
     private boolean isHighlight;
 

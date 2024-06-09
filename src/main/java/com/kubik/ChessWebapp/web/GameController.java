@@ -59,9 +59,7 @@ public class GameController {
     @PostMapping("/game-move")
     @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Board> move(@RequestBody Move move) throws RuntimeException {
-//        System.out.println(move);
         Board board = chessGameService.move(move);
-
         simpMessagingTemplate.convertAndSend("/topic/game-progress/" + board.getId(), board);
         return ResponseEntity.ok(board);
     }
