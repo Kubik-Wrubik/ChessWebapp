@@ -18,7 +18,7 @@ function playerTurn(id) {
     if (playerTurnNow != playerType) {
         alert("It's not your turn!")
     } else {
-            makeAMove(id);
+        makeAMove(id);
     }
 }
 
@@ -87,7 +87,7 @@ function refreshChessBoard(board) {
 }
 
 
-$(".light, .dark").click(function () {
+$(document).on("click", ".light, .dark", function () {
     var squareId = $(this).attr('id');
     var s = squareId.substring(7);
     var keyByValue = getKeyByValue(chessSquareAndIndexesMap, s);

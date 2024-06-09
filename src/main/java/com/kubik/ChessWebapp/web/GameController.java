@@ -1,6 +1,7 @@
 package com.kubik.ChessWebapp.web;
 
 import com.kubik.ChessWebapp.dto.ChessPlayerDto;
+import com.kubik.ChessWebapp.dto.GameConnect;
 import com.kubik.ChessWebapp.model.Board;
 import com.kubik.ChessWebapp.model.ChessUser;
 import com.kubik.ChessWebapp.model.Move;
@@ -25,35 +26,34 @@ public class GameController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/game-create-json")
-    //todo check code below for a necessary
+    //todo check CrossOrigin for a necessary
     @CrossOrigin(origins = "http://localhost:8080")
-    public ResponseEntity<Board> create(@RequestBody ChessPlayerDto chessPlayer) {
+    public ResponseEntity<Board> createGame(@RequestBody ChessPlayerDto chessPlayer) {
         System.out.println("create player: " + chessPlayer);
         ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
         return ResponseEntity.ok(chessGameService.createGame(userByNickname));
     }
-    @PostMapping("/game-create")
+    @PostMapping("/board-create")
     @CrossOrigin(origins = "http://localhost:8080")
-    public String create(@RequestBody ChessPlayerDto chessPlayer, Model model) {
-        System.out.println("create player: " + chessPlayer);
-        ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
-        model.addAttribute("board", chessGameService.createGame(userByNickname));
+    public String createBoard(@RequestBody String gameId, Model model) {
+        model.addAttribute("board", chessGameService.getGame(gameId));
         return "fragments/game-page :: game-board";
     }
 
-    @PostMapping("/connect-random")
+    @PostMapping("/connect-random-json")
     @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Board> connectRandom(@RequestBody ChessPlayerDto chessPlayer) throws RuntimeException{
-        System.out.println("two players plays, Hooray");
-        System.out.println("connect-random player: " + chessPlayer);
         ChessUser userByNickname = chessUserService.getUserByNickname(chessPlayer.getNickname());
         return ResponseEntity.ok(chessGameService.connectToRandom(userByNickname));
     }
 
-//    @PostMapping("/connect")
-//    public ResponseEntity<Game> connect(@RequestBody ConnectRequest request) throws GameException {
-//        return ResponseEntity.ok(chessGameService.connectToGame(request.getPlayer(), request.getGameId()));
-//    }
+    @PostMapping("/connect-json")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public ResponseEntity<Board> connectSpecific(@RequestBody GameConnect connect) throws RuntimeException {
+//        System.out.println("specific gameId is" + gameId);
+        ChessUser userByNickname = chessUserService.getUserByNickname(connect.getPlayer().getNickname());
+        return ResponseEntity.ok(chessGameService.connectToSpecific(userByNickname, connect.getGameId()));
+    }
 
 
 

@@ -23,15 +23,29 @@ public class ChessGameService {
     }
 
     public Board connectToRandom(ChessUser user) {
-        System.out.println("connect random service");
         Optional<Board> optionalGame = boardRepository.findFirstBySecondChessPlayerIsNullAndBoardStatus(BoardStatus.NEW);
         optionalGame.orElseThrow(() -> new RuntimeException("All games are occupied"));
         Board board = optionalGame.get();
-        System.out.println(board);
         board.setSecondChessPlayer(user);
         board.setBoardStatus(BoardStatus.IN_PROGRESS);
         boardRepository.save(board);
         return board;
+    }
+
+    public Board connectToSpecific(ChessUser user, String gameId) {
+        Optional<Board> optionalGame = boardRepository.findById(gameId);
+        optionalGame.orElseThrow(() -> new RuntimeException("There is no such game"));
+        Board board = optionalGame.get();
+        board.setSecondChessPlayer(user);
+        board.setBoardStatus(BoardStatus.IN_PROGRESS);
+        boardRepository.save(board);
+        return board;
+    }
+
+    public Board getGame(String gameId){
+        Optional<Board> optionalGame = boardRepository.findById(gameId);
+        optionalGame.orElseThrow(() -> new RuntimeException("All games are occupied"));
+        return optionalGame.get();
     }
 
     public Board move(Move move) {
@@ -46,12 +60,9 @@ public class ChessGameService {
         if(gameResult != null){
             board.setGameResult(gameResult);
             board.setBoardStatus(BoardStatus.FINISHED);
+            System.out.println("finish");
         }
-
-//        Board boardAfterMove = sowService.sow(board,sow.getPitIndex());
         boardRepository.save(board);
-
-//        return boardAfterMove;
         return board;
     }
 

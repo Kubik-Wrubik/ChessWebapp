@@ -18,9 +18,12 @@
     <div class="box">
         <button name="createNewGameBtn" th:attr="onclick=|create_game('${user.nickname}')|">Create a new game</button>
     </div>
-    <br/>
     <div class="box">
         <button th:attr="onclick=|connectToRandom('${user.nickname}')|">Connect to random game</button>
+    </div>
+    <div class="box">
+        <input id="game_id">
+        <button th:attr="onclick=|connectToSpecific('${user.nickname}')|">Connect to specific game</button>
     </div>
 </div>
 
