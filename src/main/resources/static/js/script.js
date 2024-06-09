@@ -16,16 +16,9 @@ const getKeyByValue = (object, value) => {
 };
 function playerTurn(id) {
     if (playerTurnNow != playerType) {
-        alert("It's not your turn!");
+        alert("It's not your turn!")
     } else {
-        // if ((playerType == "WHITE_PLAYER" && id > 7) || (playerType == "SECOND_PLAYER" && id < 7)) {
-        //     alert("choose from your pits!");
-        //     return;
-        // }
-        // var stones = $("#" + id).text();
-        // if (stones != "0") {
             makeAMove(id);
-        // }
     }
 }
 
@@ -70,36 +63,32 @@ function refreshChessBoard(board) {
         }
     });
 
-    if (board.winner != null) {
-        alert("Winner is " + board.winner.nickname);
+    if (board.gameResult != null) {
+        alert(board.gameResult);
     }
     playerTurnNow = board.turn;
     console.log(playerTurnNow);
 
-    // $("#firstPlayerName").text(board.firstPlayer.name + "'s larger pit");
-    // $("#secondPlayerName").text(board.secondPlayer== null ? "second player" : board.secondPlayer.name + "'s larger pit");
+    if(board.firstChessPlayer != null && board.secondChessPlayer != null){
+        $("#first_player").text(board.firstChessPlayer.nickname == null ? "" : board.firstChessPlayer.nickname);
+        $("#second_player").text(board.secondChessPlayer.nickname == null ? "" : board.secondChessPlayer.nickname);
+    }
 
-    // if (playerType == "FIRST_PLAYER") {
-    //     $("#firstPlayerName").background="#1472a9";
-    //     $("#secondPlayerName").background="#333";
-    //     $("#opponentLogin").text(board.secondPlayer!= null ? board.secondPlayer.name : "");
-    //
-    // } else {
-    //     $("#secondPlayerName").background ="#1472a9";
-    //     $("#firstPlayerName").background="#333";
-    //     $("#opponentLogin").text(board.firstPlayer.name);
-    //
-    // }
+    if (playerTurnNow == "WHITE_PLAYER") {
+        console.log("WHITE_PLAYER");
+        $("#first_player").addClass("playerTurn");
+        $("#second_player").removeClass("playerTurn");
+    } else {
+        console.log("BLACK_PLAYER");
+        $("#second_player").addClass("playerTurn")
+        $("#first_player").removeClass("playerTurn");
+    }
 
 }
 
 
 $(".light, .dark").click(function () {
     var squareId = $(this).attr('id');
-    // todo неможливо передати пусту клітинку для переміщення фігури
-    // if($("#" + squareId + " img").attr('src') === imgTransparent){
-    //     return;
-    // }
     var s = squareId.substring(7);
     var keyByValue = getKeyByValue(chessSquareAndIndexesMap, s);
     playerTurn(keyByValue);

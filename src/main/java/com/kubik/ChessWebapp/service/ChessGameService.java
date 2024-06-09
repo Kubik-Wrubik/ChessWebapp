@@ -1,11 +1,11 @@
 package com.kubik.ChessWebapp.service;
 
-import com.kubik.ChessWebapp.dto.ChessPlayerDto;
 import com.kubik.ChessWebapp.model.Board;
 import com.kubik.ChessWebapp.model.ChessUser;
 import com.kubik.ChessWebapp.model.Move;
 import com.kubik.ChessWebapp.repository.BoardRepository;
 import com.kubik.ChessWebapp.statics.BoardStatus;
+import com.kubik.ChessWebapp.statics.GameResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class ChessGameService {
 
     public Board connectToRandom(ChessUser user) {
         System.out.println("connect random service");
-        Optional<Board> optionalGame = boardRepository.findFirstBySecondChessPlayerIsNull();
+        Optional<Board> optionalGame = boardRepository.findFirstBySecondChessPlayerIsNullAndBoardStatus(BoardStatus.NEW);
         optionalGame.orElseThrow(() -> new RuntimeException("All games are occupied"));
         Board board = optionalGame.get();
         System.out.println(board);
@@ -42,6 +42,11 @@ public class ChessGameService {
 
         String squareIndex = move.getSquareIndex();
         board.mouseClick(Character.getNumericValue(squareIndex.charAt(0)), Character.getNumericValue(squareIndex.charAt(1)));
+        GameResult gameResult = board.checkGameOver();
+        if(gameResult != null){
+            board.setGameResult(gameResult);
+            board.setBoardStatus(BoardStatus.FINISHED);
+        }
 
 //        Board boardAfterMove = sowService.sow(board,sow.getPitIndex());
         boardRepository.save(board);
@@ -49,4 +54,6 @@ public class ChessGameService {
 //        return boardAfterMove;
         return board;
     }
+
+
 }

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +24,7 @@ public class GameController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/game-create")
+    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Board> create(@RequestBody ChessPlayerDto chessPlayer) {
         System.out.println("create player: " + chessPlayer);
 
@@ -31,6 +33,7 @@ public class GameController {
         return ResponseEntity.ok(chessGameService.createGame(userByNickname));
     }
     @PostMapping("/connect-random")
+    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Board> connectRandom(@RequestBody ChessPlayerDto chessPlayer) throws RuntimeException{
         System.out.println("two players plays, Hooray");
         System.out.println("connect-random player: " + chessPlayer);
@@ -54,10 +57,9 @@ public class GameController {
 //    }
 
     @PostMapping("/game-move")
+    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Board> move(@RequestBody Move move) throws RuntimeException {
-//        System.out.println(move);
         Board board = chessGameService.move(move);
-
         simpMessagingTemplate.convertAndSend("/topic/game-progress/" + board.getId(), board);
         return ResponseEntity.ok(board);
     }

@@ -18,6 +18,17 @@ img {
     left: 20%;
 }
 
+.playerNickname{
+    text-indent: 60px;
+    font-size: 2rem;
+    color: #888888;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.playerTurn {
+    color: #000000;
+}
+
 .light{
     background-color: antiquewhite;
 }
