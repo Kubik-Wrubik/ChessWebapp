@@ -67,6 +67,7 @@ public class King extends AbstractPiece {
                         return true;
                     }
                 }
+                /// end
             } else if (this.getColor()== PlayerColor.BLACK_PLAYER) {
                 AbstractPiece leftRook = board.getSquareFromPos(new Position(0, 0)).getOccupyingPiece();
                 if (leftRook != null && !leftRook.isHasMoved()) {
@@ -107,7 +108,6 @@ public class King extends AbstractPiece {
             if (this.getColor()== PlayerColor.WHITE_PLAYER) {
                 AbstractPiece rightRook = board.getSquareFromPos(new Position(7, 7)).getOccupyingPiece();
                 if (rightRook != null && !rightRook.isHasMoved()) {
-                    // вище ясно
                     boolean pathClear = true;
                     for (int i = 5; i <= 6; i++) {
                         if (board.getSquareFromPos(new Position(i, 7)).getOccupyingPiece() != null) {

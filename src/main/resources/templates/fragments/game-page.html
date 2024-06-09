@@ -1,19 +1,7 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Chess</title>
-    <link type="text/css" href="/css/main-style.css" rel="stylesheet">
-    <link type="text/css" href="/css/game-style.css" rel="stylesheet">
-    <!--  sockjs, stomp and jquery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</head>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div id="boardFrame">
+<div th:fragment="game-board" id="board">
     <div class="playerNickname" id="second_player"></div>
 
     <table>
@@ -119,9 +107,5 @@
     </table>
     <div class="playerNickname" id="first_player"></div>
 </div>
-
-<script src="js/script.js"></script>
-<script src="js/socket_js.js"></script>
 </body>
-
 </html>

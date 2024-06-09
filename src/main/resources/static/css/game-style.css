@@ -12,7 +12,7 @@ img {
     display: block;
     margin: auto;
 }
-#boardFrame{
+#board{
     position: absolute;
     top: 90%;
     left: 20%;

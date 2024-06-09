@@ -1,4 +1,4 @@
-const url = 'http://192.168.0.104:8080';
+const url = 'http://localhost:8080'; //change for local game
 let stompClient;
 let gameId;
 let playerType;
@@ -17,8 +17,10 @@ function connectToSocket(gameId) {
 }
 
 function create_game(name) {
+
+
     $.ajax({
-        url: url + "/game-create",
+        url: url + "/game-create-json",
         type: 'POST',
         dataType: "json",
         contentType: "application/json",
@@ -32,6 +34,23 @@ function create_game(name) {
             refreshChessBoard(board);
             connectToSocket(gameId);
             alert("Your created a game. Game id is: " + board.id);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    //todo add another request
+
+    $.ajax({
+        url: url + "/game-create",
+        type: 'POST',
+        dataType: "html",
+        contentType: "application/json",
+        data: JSON.stringify({
+            "nickname": name
+        }),
+        success: function (fragment) {
+            $("#boardFrame").html(fragment);
         },
         error: function (error) {
             console.log(error);
