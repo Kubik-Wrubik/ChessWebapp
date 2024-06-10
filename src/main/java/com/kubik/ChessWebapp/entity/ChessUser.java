@@ -1,4 +1,4 @@
-package com.kubik.ChessWebapp.model;
+package com.kubik.ChessWebapp.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>Registration Result</title>
 </head>
-
 <body>
         <h1 class="neon-title">Registration Successful</h1>
         <p th:text="'Thank you for joining us, ' + ${user.nickname}"></p>
         <a th:href="@{/}">Go Back</a>
 </body>
-
 </html>

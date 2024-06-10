@@ -1,6 +1,6 @@
 var playerTurnNow = "";
 var imgTransparent = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-let chessSquareAndIndexesMap  = {
+let chessSquaresAndIndexSquaresMap = {
     "00": "18", "10": "28", "20": "38", "30": "48", "40": "58", "50": "68", "60": "78", "70": "88",
     "01": "17", "11": "27", "21": "37", "31": "47", "41": "57", "51": "67", "61": "77", "71": "87",
     "02": "16", "12": "26", "22": "36", "32": "46", "42": "56", "52": "66", "62": "76", "72": "86",
@@ -14,8 +14,9 @@ let chessSquareAndIndexesMap  = {
 const getKeyByValue = (object, value) => {
     return Object.keys(object).find(key => object[key] === value);
 };
+
 function playerTurn(id) {
-    if (playerTurnNow != playerType) {
+    if (playerTurnNow !== playerType) {
         alert("It's not your turn!")
     } else {
         makeAMove(id);
@@ -47,18 +48,16 @@ function refreshChessBoard(board) {
     squares.forEach((square) => {
         var piece = square.occupyingPiece;
         var position = square.position;
-        var htmlPosition = chessSquareAndIndexesMap['' + position.x + position.y];
-        if(piece != null) {
+        var htmlPosition = chessSquaresAndIndexSquaresMap['' + position.x + position.y];
+        if (piece != null) {
             var imgPath = "/" + piece.imgPath;
             $("#square_" + htmlPosition + " img").attr("src", imgPath);
-        }
-        else{
+        } else {
             $("#square_" + htmlPosition + " img").attr("src", imgTransparent);
         }
-        if(square.highlight){
+        if (square.highlight) {
             $("#square_" + htmlPosition).addClass("highlighted");
-        }
-        else{
+        } else {
             $("#square_" + htmlPosition).removeClass("highlighted");
         }
     });
@@ -67,30 +66,26 @@ function refreshChessBoard(board) {
         alert(board.gameResult);
     }
     playerTurnNow = board.turn;
-    console.log(playerTurnNow);
 
-    if(board.firstChessPlayer != null && board.secondChessPlayer != null){
+    if (board.firstChessPlayer != null && board.secondChessPlayer != null) {
         $("#first_player").text(board.firstChessPlayer.nickname == null ? "" : board.firstChessPlayer.nickname);
         $("#second_player").text(board.secondChessPlayer.nickname == null ? "" : board.secondChessPlayer.nickname);
     }
 
     if (playerTurnNow == "WHITE_PLAYER") {
-        console.log("WHITE_PLAYER");
         $("#first_player").addClass("playerTurn");
         $("#second_player").removeClass("playerTurn");
     } else {
-        console.log("BLACK_PLAYER");
         $("#second_player").addClass("playerTurn")
         $("#first_player").removeClass("playerTurn");
     }
-
 }
 
 
 $(document).on("click", ".light, .dark", function () {
     var squareId = $(this).attr('id');
     var s = squareId.substring(7);
-    var keyByValue = getKeyByValue(chessSquareAndIndexesMap, s);
+    var keyByValue = getKeyByValue(chessSquaresAndIndexSquaresMap, s);
     playerTurn(keyByValue);
 });
 

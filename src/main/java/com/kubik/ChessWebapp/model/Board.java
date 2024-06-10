@@ -1,7 +1,8 @@
 package com.kubik.ChessWebapp.model;
 
-import com.kubik.ChessWebapp.statics.BoardStatus;
+import com.kubik.ChessWebapp.entity.ChessUser;
 import com.kubik.ChessWebapp.model.pieces.*;
+import com.kubik.ChessWebapp.statics.BoardStatus;
 import com.kubik.ChessWebapp.statics.GameResult;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 import lombok.Getter;
@@ -49,7 +50,7 @@ public class Board {
         List<Square> result = new ArrayList<>();
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                result.add(new Square(new Position(x,y)));
+                result.add(new Square(new Position(x, y)));
             }
         }
         return result;
@@ -77,14 +78,25 @@ public class Board {
                 if (!"  ".equals(piece)) {
                     Square square = getSquareFromPos(new Position(x, y));
                     PlayerColor color = piece.charAt(0) == 'w' ? PlayerColor.WHITE_PLAYER : PlayerColor.BLACK_PLAYER;
-
                     switch (piece.charAt(1)) {
-                        case 'R': square.setOccupyingPiece(new Rook(new Position(x, y), color)); break;
-                        case 'N': square.setOccupyingPiece(new Knight(new Position(x, y), color)); break;
-                        case 'B': square.setOccupyingPiece(new Bishop(new Position(x, y), color)); break;
-                        case 'Q': square.setOccupyingPiece(new Queen(new Position(x, y), color)); break;
-                        case 'K': square.setOccupyingPiece(new King(new Position(x, y), color)); break;
-                        case 'P': square.setOccupyingPiece(new Pawn(new Position(x, y), color)); break;
+                        case 'R':
+                            square.setOccupyingPiece(new Rook(new Position(x, y), color));
+                            break;
+                        case 'N':
+                            square.setOccupyingPiece(new Knight(new Position(x, y), color));
+                            break;
+                        case 'B':
+                            square.setOccupyingPiece(new Bishop(new Position(x, y), color));
+                            break;
+                        case 'Q':
+                            square.setOccupyingPiece(new Queen(new Position(x, y), color));
+                            break;
+                        case 'K':
+                            square.setOccupyingPiece(new King(new Position(x, y), color));
+                            break;
+                        case 'P':
+                            square.setOccupyingPiece(new Pawn(new Position(x, y), color));
+                            break;
                     }
                 }
             }
@@ -94,9 +106,6 @@ public class Board {
     public void mouseClick(int x, int y) {
         System.out.println(x + " and " + y);
         Square clickedSquare = getSquareFromPos(new Position(x, y));
-//        System.out.println(clickedSquare);
-        // todo assign selectedPiece to board
-
         if (selectedPiece == null) {
             if (clickedSquare.getOccupyingPiece() != null && clickedSquare.getOccupyingPiece().getColor().equals(turn)) {
                 selectedPiece = clickedSquare.getOccupyingPiece();
@@ -104,29 +113,17 @@ public class Board {
             }
         } else if (selectedPiece.move(this, clickedSquare, false)) {
             turn = PlayerColor.togglePlayerTurn(turn);
-            //todo check it in another method
-//            if (isStalemate(turn)) {
-//                return false;
-//            }
         }
-        //todo recall for what this code
-//        else if (clickedSquare.occupyingPiece != null && clickedSquare.occupyingPiece.color.equals(turn)) {
-//            selectedPiece = clickedSquare.occupyingPiece;
-//        }
-//        return true;
-
         checkGameOver();
     }
 
     public boolean isInCheck(PlayerColor color, Position[] AttackingKingPositions) {
         boolean result = false;
         Position kingPos = null;
-
         AbstractPiece changingPiece = null;
         Square oldSquare = null;
         Square newSquare = null;
         AbstractPiece newSquareOldPiece = null;
-        // todo difference in logic
         if (AttackingKingPositions != null) {
             for (Square square : squares) {
                 if (square.getPosition().equals(AttackingKingPositions[0])) {
@@ -145,18 +142,15 @@ public class Board {
                 }
             }
         }
-//        Отримуємо масив фігур для аналізу чи король буде під ударом у разі можливого ходу
         List<AbstractPiece> pieces = new ArrayList<>();
         for (Square square : squares) {
             if (square.getOccupyingPiece() != null) {
                 pieces.add(square.getOccupyingPiece());
             }
         }
-//        якщо вибрана фігура - король то переміщаємо його на нову клітку
         if (changingPiece != null && "K".equals(changingPiece.getName())) {
             kingPos = newSquare.getPosition();
         }
-//        Отримуємо позицію нашого короля
         if (kingPos == null) {
             for (AbstractPiece piece : pieces) {
                 if ("K".equals(piece.getName()) && color.equals(piece.getColor())) {
@@ -165,7 +159,6 @@ public class Board {
                 }
             }
         }
-//        Перевіряємо чи хоча б одна ворожа фігура атакує короля
         for (AbstractPiece piece : pieces) {
             if (!color.equals(piece.getColor())) {
                 for (Square square : piece.getMoves(this)) {
@@ -176,7 +169,6 @@ public class Board {
                 }
             }
         }
-//        "Повертаємо" фігуру на місце
         if (AttackingKingPositions != null) {
             oldSquare.setOccupyingPiece(changingPiece);
             newSquare.setOccupyingPiece(newSquareOldPiece);
@@ -192,7 +184,6 @@ public class Board {
                     kingPieces.add(square.getOccupyingPiece());
                 }
             }
-//            Перевірка чи є якісь фігури які можуть захистити короля, якщо немає - повертається True
             for (AbstractPiece piece : kingPieces) {
                 if (!piece.getValidMoves(this).isEmpty()) {
                     return false;
@@ -204,7 +195,6 @@ public class Board {
     }
 
     public boolean isStalemate(PlayerColor color) {
-//        Якщо жодна з фігур короля немає можливих ходів включаючи самого короля- повертає True
         for (Square square : squares) {
             if (square.getOccupyingPiece() != null && color.equals(square.getOccupyingPiece().getColor())) {
                 if (!square.getOccupyingPiece().getValidMoves(this).isEmpty()) {
@@ -212,7 +202,6 @@ public class Board {
                 }
             }
         }
-
         return true;
     }
 
@@ -226,11 +215,11 @@ public class Board {
     }
 
     public GameResult checkGameOver() {
-        if(isInCheckmate(PlayerColor.WHITE_PLAYER)){
+        if (isInCheckmate(PlayerColor.WHITE_PLAYER)) {
             return GameResult.BLACK_PLAYER_WIN;
         } else if (isInCheckmate(PlayerColor.BLACK_PLAYER)) {
             return GameResult.WHITE_PLAYER_WIN;
-        } else if(isStalemate(turn)) {
+        } else if (isStalemate(turn)) {
             return GameResult.STALEMATE;
         }
         return null;

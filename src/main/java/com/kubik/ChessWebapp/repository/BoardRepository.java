@@ -10,6 +10,5 @@ import java.util.Optional;
 @Document(collection = "boards")
 public interface BoardRepository extends MongoRepository<Board, Long> {
     Optional<Board> findFirstBySecondChessPlayerIsNullAndBoardStatus(BoardStatus boardStatus);
-
     Optional<Board> findById(String gameId);
 }

@@ -1,14 +1,12 @@
 package com.kubik.ChessWebapp.model.pieces;
 
-import com.kubik.ChessWebapp.model.Board;
 import com.kubik.ChessWebapp.model.AbstractPiece;
+import com.kubik.ChessWebapp.model.Board;
 import com.kubik.ChessWebapp.model.Position;
 import com.kubik.ChessWebapp.model.Square;
 import com.kubik.ChessWebapp.statics.PlayerColor;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,16 +20,16 @@ public class King extends AbstractPiece {
 
     @Override
     public List<List<Square>> getPossibleMoves(Board board) {
-        List<List<Square>> output = new ArrayList<>();
+        List<List<Square>> possibleMoves = new ArrayList<>();
         int[][] moves = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
         for (int[] move : moves) {
             int newX = this.getPosition().getX() + move[0];
             int newY = this.getPosition().getY() + move[1];
             if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-                output.add(Collections.singletonList(board.getSquareFromPos(new Position(newX, newY))));
+                possibleMoves.add(Collections.singletonList(board.getSquareFromPos(new Position(newX, newY))));
             }
         }
-        return output;
+        return possibleMoves;
     }
 
     public boolean canCastleLeft(Board board) {
@@ -48,9 +46,8 @@ public class King extends AbstractPiece {
                     }
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
-//                        field.getPiecesByColor("black");
-                        for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                        for (Square square : board.getSquares()) {
+                            if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER) {
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -67,8 +64,7 @@ public class King extends AbstractPiece {
                         return true;
                     }
                 }
-                /// end
-            } else if (this.getColor()== PlayerColor.BLACK_PLAYER) {
+            } else if (this.getColor() == PlayerColor.BLACK_PLAYER) {
                 AbstractPiece leftRook = board.getSquareFromPos(new Position(0, 0)).getOccupyingPiece();
                 if (leftRook != null && !leftRook.isHasMoved()) {
                     boolean pathClear = true;
@@ -80,8 +76,8 @@ public class King extends AbstractPiece {
                     }
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
-                        for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                        for (Square square : board.getSquares()) {
+                            if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER) {
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -105,7 +101,7 @@ public class King extends AbstractPiece {
 
     public boolean canCastleRight(Board board) {
         if (!this.isHasMoved()) {
-            if (this.getColor()== PlayerColor.WHITE_PLAYER) {
+            if (this.getColor() == PlayerColor.WHITE_PLAYER) {
                 AbstractPiece rightRook = board.getSquareFromPos(new Position(7, 7)).getOccupyingPiece();
                 if (rightRook != null && !rightRook.isHasMoved()) {
                     boolean pathClear = true;
@@ -117,8 +113,8 @@ public class King extends AbstractPiece {
                     }
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
-                        for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER){
+                        for (Square square : board.getSquares()) {
+                            if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.BLACK_PLAYER) {
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -135,7 +131,7 @@ public class King extends AbstractPiece {
                         return true;
                     }
                 }
-            } else if (this.getColor()== PlayerColor.BLACK_PLAYER) {
+            } else if (this.getColor() == PlayerColor.BLACK_PLAYER) {
                 AbstractPiece rightRook = board.getSquareFromPos(new Position(7, 0)).getOccupyingPiece();
                 if (rightRook != null && !rightRook.isHasMoved()) {
                     boolean pathClear = true;
@@ -147,8 +143,8 @@ public class King extends AbstractPiece {
                     }
                     if (pathClear) {
                         List<AbstractPiece> pieces = new ArrayList<>();
-                        for(Square square : board.getSquares()){
-                            if(square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER){
+                        for (Square square : board.getSquares()) {
+                            if (square.getOccupyingPiece() != null && square.getOccupyingPiece().getColor() == PlayerColor.WHITE_PLAYER) {
                                 pieces.add(square.getOccupyingPiece());
                             }
                         }
@@ -189,7 +185,6 @@ public class King extends AbstractPiece {
 
     @Override
     public void specificMove(Square square, Board board, Square prevSquare) {
-        //todo cant castle
         if (this.getName().equals("K")) {
             if (prevSquare.getPosition().getX() - this.getPosition().getX() == 2) {
                 AbstractPiece rook = board.getPieceFromPos(new Position(0, this.getPosition().getY()));

@@ -1,7 +1,7 @@
 package com.kubik.ChessWebapp.service;
 
 import com.kubik.ChessWebapp.model.Board;
-import com.kubik.ChessWebapp.model.ChessUser;
+import com.kubik.ChessWebapp.entity.ChessUser;
 import com.kubik.ChessWebapp.model.Move;
 import com.kubik.ChessWebapp.repository.BoardRepository;
 import com.kubik.ChessWebapp.statics.BoardStatus;
@@ -15,8 +15,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ChessGameService {
     private final BoardRepository boardRepository;
+
     public Board createGame(ChessUser user) {
-        Board board = new Board(); // todo make it bean
+        Board board = new Board();
         board.setFirstChessPlayer(user);
         boardRepository.save(board);
         return board;
@@ -34,7 +35,7 @@ public class ChessGameService {
 
     public Board connectToSpecific(ChessUser user, String gameId) {
         Optional<Board> optionalGame = boardRepository.findById(gameId);
-        optionalGame.orElseThrow(() -> new RuntimeException("There is no such game"));
+        optionalGame.orElseThrow(() -> new RuntimeException("There is no game with provided id"));
         Board board = optionalGame.get();
         board.setSecondChessPlayer(user);
         board.setBoardStatus(BoardStatus.IN_PROGRESS);
@@ -42,7 +43,7 @@ public class ChessGameService {
         return board;
     }
 
-    public Board getGame(String gameId){
+    public Board getGame(String gameId) {
         Optional<Board> optionalGame = boardRepository.findById(gameId);
         optionalGame.orElseThrow(() -> new RuntimeException("All games are occupied"));
         return optionalGame.get();
@@ -50,17 +51,14 @@ public class ChessGameService {
 
     public Board move(Move move) {
         Optional<Board> optionalGame = boardRepository.findById(move.getGameId());
-
-        optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
+        optionalGame.orElseThrow(() -> new RuntimeException("There is no game with provided id"));
         Board board = optionalGame.get();
-
         String squareIndex = move.getSquareIndex();
         board.mouseClick(Character.getNumericValue(squareIndex.charAt(0)), Character.getNumericValue(squareIndex.charAt(1)));
         GameResult gameResult = board.checkGameOver();
-        if(gameResult != null){
+        if (gameResult != null) {
             board.setGameResult(gameResult);
             board.setBoardStatus(BoardStatus.FINISHED);
-            System.out.println("finish");
         }
         boardRepository.save(board);
         return board;

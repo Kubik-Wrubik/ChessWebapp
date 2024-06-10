@@ -1,7 +1,7 @@
 package com.kubik.ChessWebapp.service;
 
 import com.kubik.ChessWebapp.dto.ChessUserDto;
-import com.kubik.ChessWebapp.model.ChessUser;
+import com.kubik.ChessWebapp.entity.ChessUser;
 import com.kubik.ChessWebapp.repository.ChessUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,7 +19,7 @@ public class ChessUserService {
         return chessUserRepository.save(modelMapper.map(chessUserDto, ChessUser.class)).getId();
     }
 
-    public ChessUser getUserByNickname(String nickname){
+    public ChessUser getUserByNickname(String nickname) {
         return chessUserRepository.findByNickname(nickname);
     }
 
