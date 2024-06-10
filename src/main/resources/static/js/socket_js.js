@@ -101,6 +101,7 @@ function createBoardHtml(gameId, board){
         contentType: "application/json",
         data: gameId,
         success: function (fragment) {
+            $("#buttonsFrame").remove();
             $("#boardFrame").html(fragment);
             refreshChessBoard(board);
         },
